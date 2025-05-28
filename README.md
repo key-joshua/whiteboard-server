@@ -1,6 +1,7 @@
 # WHITEBOARD SERVER
 
 - This is server for Collaborative Whiteboard.
+- Access Hosted Server: https://whiteboard-server-2p12.onrender.com
 
 ## INSTALLATION
 
