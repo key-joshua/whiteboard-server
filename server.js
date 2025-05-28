@@ -10,6 +10,7 @@ const Room = require("./models/Room")
 const roomRoutes = require("./routes/rooms")
 
 const app = express()
+const roomUsers = new Map()
 const PORT = process.env.PORT || 9000
 const server = http.createServer(app)
 
@@ -26,14 +27,13 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use("/api/rooms", roomRoutes)
 
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+app.get('**', (req, res) => {
+    return res.status(200).json({ status: 200, message: 'WELCOME TO THE WHITEBOARD SERVER.' });
+});
+
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, })
 .then(() => console.log("✅ MongoDB connected"))
 .catch((err) => console.error("❌ MongoDB connection error:", err))
-
-const roomUsers = new Map()
 
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id)
@@ -147,6 +147,4 @@ io.on("connection", (socket) => {
   })
 })
 
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+server.listen(PORT, () => { console.log(`Server running on port ${PORT}`) })
